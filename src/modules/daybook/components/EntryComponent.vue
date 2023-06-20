@@ -1,5 +1,7 @@
 <template lang="">
-    <div class="entry-container mb-3 pointer p-2">
+    <div class="entry-container mb-3 pointer p-2"
+    @click="$router.push({ name:'entry', params:{id:10}})"
+    >
         <!-- title -->
         <div class="entry-title d-flex">
             <span class="text-success fs-5 fw-bold">19 </span>
@@ -18,13 +20,15 @@ $primary: #41b883;
 .entry-container {
     border-bottom: 1px solid $primary;
     transition: .2s all ease-in;
+
     &:hover {
         // lighten  is a built in function of scss to be more clear a color
         background-color: lighten($color: grey, $amount: 45);
         transition: .2s all ease-in;
     }
 }
-.entry-description{
+
+.entry-description {
     text-align: start;
 }
 </style>

@@ -2,15 +2,18 @@
     <div class="d-flex justify-content-center">
         <h1 class="align-self-center">There are not nothing selected</h1>
     </div>
+    <FabComponent/>
 </template>
 <script>
+import { defineAsyncComponent } from 'vue';
 export default {
-    
+    components: {
+        FabComponent: defineAsyncComponent(() => import('../components/FabComponent.vue'))   
+    }
 }
 </script>
 <style lang="scss" scoped>
     div{
-        height: 100vh;
-        width: 100%;
+        height: 100%;
     }
 </style>

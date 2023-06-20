@@ -30,7 +30,7 @@ input {
 }
 
 .entry-scrollarea {
-    height: calc(100vh - 115px);
+    height: calc(100vh - 119px);
     overflow: scroll;
 }
 </style>
