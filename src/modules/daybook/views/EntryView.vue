@@ -22,7 +22,9 @@
             placeholder="¿Que sucedio hoy?"
         ></textarea>
     </div>
-    <FabComponent/>
+    <FabComponent 
+    icon="fa-save"
+    />
     <img src="https://www.hindustantimes.com/ht-img/img/2023/04/07/1600x900/jujutsu-kaisen_1680853025638_1680853037810_1680853037810.jpeg" alt="entry-picture" class="img-thumbnail"/>
 </template>
 <script>

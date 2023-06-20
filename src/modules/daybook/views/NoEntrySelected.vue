@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-center">
         <h1 class="align-self-center">There are not nothing selected</h1>
     </div>
-    <FabComponent/>
+    <FabComponent />
 </template>
 <script>
 import { defineAsyncComponent } from 'vue';
