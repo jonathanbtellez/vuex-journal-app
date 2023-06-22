@@ -9,10 +9,20 @@
             <span class="mx-2 fs-6 fw-light">2023, Lunes.</span>
         </div>
         <div class="entry-description fs-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam praesentium tempore iste repellat illum quidem excepturi, minima beatae pariatur cupiditate, error vel ipsam animi reprehenderit eveniet corporis quo. Tenetur, odit!
+            {{entry.text}}
         </div>
     </div>
 </template>
+<script>
+    export default {
+        props:{
+            entry:{
+                type: Object,
+                required: true,
+            }
+        }
+    }
+</script>
 
 <style lang="scss" scoped>
 $primary: #41b883;

@@ -1,18 +1,36 @@
 <template>
     <div class="entry-list-container">
         <div class="px-2 pt-2">
-            <input type="text" class="form-control" placeholder="Search entries" />
+            <input type="text" class="form-control" placeholder="Search entries" 
+                v-model="term"
+            />
         </div>
         <div class="entry-scrollarea">
-            <h2 v-for="item in 100" :key="item"><EntryComponent/></h2>
+            <h2 v-for="item in entriesByTerm" :key="item"><EntryComponent :entry=item /></h2>
         </div>
     </div>
 </template>
 <script>
 import { defineAsyncComponent } from "vue";
+import { mapGetters } from "vuex";
 export default {
     components: {
         EntryComponent: defineAsyncComponent(()=> import("../components/EntryComponent.vue"))
+    },
+    data() {
+        return {
+            term: ""
+        }
+    },
+    computed: {
+        // Use the journal store to get the entries
+        // When we use mapGetters, we use first the name of the module and second list of maps
+        ...mapGetters("journal",["getEntriesByTerm"]),
+        // Applying the filter to the entries
+        entriesByTerm (){
+            // Using the mrthod maped to get the filtered entries
+            return this.getEntriesByTerm(this.term);
+        }
     }
 }
 </script>
