@@ -6,7 +6,7 @@
             />
         </div>
         <div class="entry-scrollarea">
-            <h2 v-for="item in entriesByTerm" :key="item"><EntryComponent :entry=item /></h2>
+            <h2 v-for="entry in entriesByTerm" :key="entry.id"><EntryComponent :entry=entry /></h2>
         </div>
     </div>
 </template>
