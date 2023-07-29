@@ -29,13 +29,13 @@
     </template>
     <FabComponent 
     icon="fa-save"
-    @on:click="saveEntry"
+    @on:click="saveEntry()"
 
     />
 </template>
 <script>
 import { defineAsyncComponent } from 'vue'
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import getDayMonthYear from '../helpers/getDayMonthYear';
 export default {
     props: {
@@ -77,9 +77,10 @@ export default {
         /**
          * This method is dispached when the fab button is click activating the on:event
          */
-        async saveEntry(){
-            console.log("Saving entry")
-        }
+        ...mapActions('journal', ['updateEntry']),
+        async saveEntry(){    
+            this.updateEntry(this.entry);
+        },
     },
     created() {
         this.loadEntry();

@@ -3,26 +3,34 @@
 // export const myMutations = (state)=>{
 // }
 
+
 /**
  * This method do a mutation that set the new entries to the state
  * @param {Vuex state} state 
  * @param {Array} entries 
  */
-export const setEntries = (state, entries)=>{
+export const setEntries = (state, entries) => {
     // Get the entries attribute and update in a new array 
     // Spreading the state.entries including the new array entries
-    state.entries= [...state.entries, ...entries]
-    
+    state.entries = [...state.entries, ...entries]
+
     // state.isLoading = false
     updateLoading(state)
 }
 
-export const updateEntry = (/*state*/)=>{
+export const updateEntry = (state, entry) => {//entry updated
+    // state.entries =>  find in an array and id
+    // Find the index of the new entry
+    const idx = state.entries.map(e=>e.id).indexOf(entry.id)
+    // state.entry => ...update
+    // update the reactive object
+    state.entries[idx] = entry
     
 }
 
-export const addEntry = (/*state*/)=>{
-    
+
+export const addEntry = (/*state*/) => {
+
 }
 
 /**
@@ -30,6 +38,6 @@ export const addEntry = (/*state*/)=>{
  * @param {vuex state} state 
  * @param {Boolean} isLoading 
  */
-export const updateLoading = (state)=>{
+export const updateLoading = (state) => {
     state.isLoading = !state.isLoading;
 }
