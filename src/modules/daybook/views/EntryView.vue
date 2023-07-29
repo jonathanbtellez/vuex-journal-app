@@ -29,6 +29,8 @@
     </template>
     <FabComponent 
     icon="fa-save"
+    @on:click="saveEntry"
+
     />
 </template>
 <script>
@@ -71,6 +73,12 @@ export default {
             const entry = this.getEntryById(this.id)
             if (!entry) return this.$router.push({ name: 'no-entry' })
             this.entry = entry;
+        },
+        /**
+         * This method is dispached when the fab button is click activating the on:event
+         */
+        async saveEntry(){
+            console.log("Saving entry")
         }
     },
     created() {
