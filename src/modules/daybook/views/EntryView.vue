@@ -101,6 +101,7 @@ export default {
         async onDeleteEntry(){
             this.deleteEntry(this.entry.id)
             //Redirect the user to entry 
+            this.$router.push({name:'no-entry'})
         }
     },
     created(){
