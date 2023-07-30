@@ -1,32 +1,32 @@
 <template>
-    <NavbarComponent/>
+    <NavbarComponent />
     <template v-if="isLoading">
         <IsLoadingComponent />
     </template>
     <template v-else>
         <div class="d-flex">
             <div class="col-4">
-                <EntryList/>
+                <EntryList />
             </div>
             <div class="col">
                 <router-view></router-view>
             </div>
         </div>
     </template>
-</template>
+</template> 
 <script>
-    import {defineAsyncComponent} from 'vue'
-    import {mapActions, mapState} from 'vuex'
-    export default {
-    components:{
-        NavbarComponent: defineAsyncComponent(()=> import('../components/NavbarComponent.vue')),
-        EntryList: defineAsyncComponent(()=> import('../components/EntryListComponent.vue')),
-        IsLoadingComponent: defineAsyncComponent(()=>import('../components/IsLoadingComponent.vue'))             
+import { defineAsyncComponent } from 'vue'
+import { mapActions, mapState } from 'vuex'
+export default {
+    components: {
+        NavbarComponent: defineAsyncComponent(() => import('../components/NavbarComponent.vue')),
+        EntryList: defineAsyncComponent(() => import('../components/EntryListComponent.vue')),
+        IsLoadingComponent: defineAsyncComponent(() => import('../components/IsLoadingComponent.vue'))
     },
 
-    computed:{
+    computed: {
         //Getting the state of vuex using mapState
-        ...mapState('journal',['isLoading'])
+        ...mapState('journal', ['isLoading'])
     },
     methods: {
         // Fetching the actions of jounarl module
@@ -37,9 +37,3 @@
     },
 }
 </script>
-
-<style scoped>
-    .component-animation {
-        transition: all 3s ease-out;
-    }
-</style>

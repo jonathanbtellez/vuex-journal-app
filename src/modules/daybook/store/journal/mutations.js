@@ -42,5 +42,5 @@ export const updateLoading = (state) => {
 }
 
 export const deleteMutation = (state, id) => {
-    state.entrie = state.entries.filter(e => e.id !== id);
+    state.entries = state.entries.filter(e => e.id !== id);
 }

@@ -18,6 +18,7 @@ export const loadEntries = async ({commit})=>{
     const entries = [] 
 
     // Loop the data received an creating and arry 
+    if(!data) return commit('setEntries', entries);
     for(let id of Object.keys(data)){
 
 
