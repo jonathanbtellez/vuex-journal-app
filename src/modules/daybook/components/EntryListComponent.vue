@@ -1,12 +1,17 @@
 <template>
     <div class="entry-list-container">
         <div class="px-2 pt-2">
-            <input type="text" class="form-control" placeholder="Search entries" 
-                v-model="term"
-            />
+            <input type="text" class="form-control" placeholder="Search entries" v-model="term" />
+        </div>
+        <div class="mt-2 d-flex flex-column">
+            <button class="btn btn-primary mx-3" @click="$router.push({name: 'entry', params:{id: 'new'}})">
+                <i class="fa fa-plus-circle"></i> New entry 
+            </button>
         </div>
         <div class="entry-scrollarea">
-            <h2 v-for="entry in entriesByTerm" :key="entry.id"><EntryComponent :entry=entry /></h2>
+            <h2 v-for="entry in entriesByTerm" :key="entry.id">
+                <EntryComponent :entry=entry />
+            </h2>
         </div>
     </div>
 </template>
@@ -15,7 +20,7 @@ import { defineAsyncComponent } from "vue";
 import { mapGetters } from "vuex";
 export default {
     components: {
-        EntryComponent: defineAsyncComponent(()=> import("../components/EntryComponent.vue"))
+        EntryComponent: defineAsyncComponent(() => import("../components/EntryComponent.vue"))
     },
     data() {
         return {
@@ -25,9 +30,9 @@ export default {
     computed: {
         // Use the journal store to get the entries
         // When we use mapGetters, we use first the name of the module and second list of maps
-        ...mapGetters("journal",["getEntriesByTerm"]),
+        ...mapGetters("journal", ["getEntriesByTerm"]),
         // Applying the filter to the entries
-        entriesByTerm (){
+        entriesByTerm() {
             // Using the mrthod maped to get the filtered entries
             return this.getEntriesByTerm(this.term);
         }

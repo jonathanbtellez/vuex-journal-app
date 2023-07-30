@@ -8,13 +8,13 @@
                 <span class="mx-2 fs-4 fw-light">{{yearDay}}</span>
             </div>
             <div>
-                <button class="btn btn-danger mx-2">
-                    Delete
+                <button v-if="entry.id" @click="onDeleteEntry" class="btn btn-danger mx-2">
                     <i class="fa fa-trash-alt"></i>                
+                    Delete
                 </button>
                 <button class="btn btn-primary mx-2">
-                    Subir foto
                     <i class="fa fa-upload"></i>                
+                    Subir foto
                 </button>            
             </div>
         </div>
@@ -70,21 +70,42 @@ export default {
     },
     methods: {
         loadEntry() {
-            const entry = this.getEntryById(this.id)
-            if (!entry) return this.$router.push({ name: 'no-entry' })
+
+            let entry
+            if (this.id === 'new') {
+                entry = {
+                    date: new Date().getTime(),
+                    text: ""
+                }
+            } else {
+                entry = this.getEntryById(this.id)
+                if (!entry) return this.$router.push({ name: 'no-entry' })
+            }
             this.entry = entry;
         },
         /**
          * This method is dispached when the fab button is click activating the on:event
          */
-        ...mapActions('journal', ['updateEntry']),
-        async saveEntry(){    
-            this.updateEntry(this.entry);
+        ...mapActions('journal', ['updateEntry', 'createEntry','deleteEntry']),
+        async saveEntry() {
+            if (this.entry.id) {
+                // Call update entry action
+                await this.updateEntry(this.entry);
+            } else {
+                // Call create entry action
+                const id = await this.createEntry(this.entry)
+                // Redirect to a entry view
+                this.$router.push({name: 'entry', params:{id} })
+            }
         },
+        async onDeleteEntry(){
+            this.deleteEntry(this.entry.id)
+            //Redirect the user to entry 
+        }
     },
-    created() {
+    created(){
+
         this.loadEntry();
-        console.log(this.id)
     },
     watch: {
         id() {

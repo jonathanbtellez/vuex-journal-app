@@ -21,18 +21,17 @@ export const setEntries = (state, entries) => {
 export const updateEntry = (state, entry) => {//entry updated
     // state.entries =>  find in an array and id
     // Find the index of the new entry
-    const idx = state.entries.map(e=>e.id).indexOf(entry.id)
+    const idx = state.entries.map(e => e.id).indexOf(entry.id)
     // state.entry => ...update
     // update the reactive object
     state.entries[idx] = entry
-    
-}
-
-
-export const addEntry = (/*state*/) => {
 
 }
 
+
+export const addEntry = (state, entry) => {
+    state.entries = [entry, ...state.entries]
+}
 /**
  * Update the value of the state where will be need
  * @param {vuex state} state 
@@ -40,4 +39,12 @@ export const addEntry = (/*state*/) => {
  */
 export const updateLoading = (state) => {
     state.isLoading = !state.isLoading;
+}
+
+export const deleteMutation = (state, id) => {
+    // TODO: delete entry
+
+    const newEntryList = state.entries.filter(e => e.id !== id);
+    console.log(newEntryList);
+    state.entries = newEntryList
 }
