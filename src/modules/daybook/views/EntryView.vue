@@ -8,12 +8,17 @@
                 <span class="mx-2 fs-4 fw-light">{{yearDay}}</span>
             </div>
             <div>
-                <input type="file" @change="onSelectedImage"/>
+                <input 
+                    type="file" 
+                    @change="onSelectedImage" 
+                    ref="imageSelector"
+                    v-show="false"
+                    accept="image/png, image/jpeg"/>
                 <button v-if="entry.id" @click="onDeleteEntry" class="btn btn-danger mx-2">
                     <i class="fa fa-trash-alt"></i>                
                     Delete
                 </button>
-                <button class="btn btn-primary mx-2">
+                <button class="btn btn-primary mx-2" @click="onSelectImage">
                     <i class="fa fa-upload"></i>                
                     Subir foto
                 </button>            
@@ -38,6 +43,7 @@
     />
 </template>
 <script>
+// https://api.cloudinary.com/v1_1/dso0xjfh8/image/upload
 import { defineAsyncComponent } from 'vue'
 import { mapGetters, mapActions } from 'vuex';
 import Swal from 'sweetalert2'
@@ -135,14 +141,14 @@ export default {
                 await this.deleteEntry(this.entry.id)
                 //Redirect the user to entry 
                 this.$router.push({ name: 'no-entry' })
-                Swal.fire('Deleted','', 'success')
+                Swal.fire('Deleted', '', 'success')
             }
         },
-        onSelectedImage(event){
+        onSelectedImage(event) {
             const file = event.target.files[0];
 
             // Validate is a image was sended
-            if(!file){
+            if (!file) {
                 // If the send of the image was cnacel the picture will be null
                 this.localImage = null;
                 this.file = null
@@ -154,9 +160,13 @@ export default {
             const fr = new FileReader()
             // 1. wait for the element charge the save he result in the localImage
             // 2. Use the method readAsDataURL() and send the file to save
-            fr.onload = () => this.localImage  =  fr.result
-            fr.readAsDataURL( file )
+            fr.onload = () => this.localImage = fr.result
+            fr.readAsDataURL(file)
 
+        },
+        onSelectImage() {
+            // Using refs we can manage an node and use the events or fn that we need
+            this.$refs.imageSelector.click()
         }
     },
     created() {
