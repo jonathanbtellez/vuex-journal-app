@@ -31,10 +31,9 @@
                 placeholder="¿Que sucedio hoy?"
             ></textarea>
         </div>
-        
-        <!-- <img src="https://www.hindustantimes.com/ht-img/img/2023/04/07/1600x900/jujutsu-kaisen_1680853025638_1680853037810_1680853037810.jpeg" alt="entry-picture" class="img-thumbnail"/> -->
-        
+        <img v-if="entry.picture && !localImage" :src="entry.picture" alt="entry-picture" class="img-thumbnail"/>
         <img v-if="localImage" :src="localImage" alt="entry-picture" class="img-thumbnail"/>
+    
     </template>
     <FabComponent 
     icon="fa-save"
@@ -43,12 +42,12 @@
     />
 </template>
 <script>
-// https://api.cloudinary.com/v1_1/dso0xjfh8/image/upload
 import { defineAsyncComponent } from 'vue'
 import { mapGetters, mapActions } from 'vuex';
 import Swal from 'sweetalert2'
 
 import getDayMonthYear from '../helpers/getDayMonthYear';
+import uploadImages from '../helpers/uploadImage';
 export default {
     props: {
         //received the prop from the router
@@ -96,20 +95,27 @@ export default {
                 if (!entry) return this.$router.push({ name: 'no-entry' })
             }
             this.entry = entry;
+            this.localImage = this.entry.picture
+            this.file = this.entry.picture
         },
         /**
          * This method is dispached when the fab button is click activating the on:event
          */
         ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
         async saveEntry() {
-
             new Swal({
                 title: 'Please wait',
                 allowOutsideClick: false
             });
-
+            
             Swal.showLoading()
-
+            
+            // Use the helpers funtion to save the image in a cloud
+            const picture = await uploadImages(this.file)
+            
+            // saving the image in the entry
+            this.entry.picture = picture
+            
             if (this.entry.id) {
                 // Call update entry action
                 await this.updateEntry(this.entry);
@@ -119,8 +125,10 @@ export default {
                 // Redirect to a entry view
                 this.$router.push({ name: 'entry', params: { id } })
             }
-
+            this.localImage = null
+            this.file = null
             Swal.fire('Saved', 'The register was saved', 'success')
+            this.loadEntry()
         },
         async onDeleteEntry() {
             const { isConfirmed } = await Swal.fire({
@@ -151,7 +159,7 @@ export default {
             if (!file) {
                 // If the send of the image was cnacel the picture will be null
                 this.localImage = null;
-                this.file = null
+                this.file = this.entry.picture;
                 return
             }
             this.file = file
