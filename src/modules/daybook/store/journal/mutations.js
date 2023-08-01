@@ -36,11 +36,10 @@ export const addEntry = (state, entry) => {
  * Update the value of the state where will be need
  * @param {vuex state} state 
  * @param {Boolean} isLoading 
- */
+*/
 export const updateLoading = (state) => {
     state.isLoading = !state.isLoading;
 }
-
 export const deleteMutation = (state, id) => {
     state.entries = state.entries.filter(e => e.id !== id);
 }
